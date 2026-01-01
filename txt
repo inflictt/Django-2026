@@ -1,0 +1,13 @@
+check by using django-admin --version
+
+to install create & activate virtual env 
+then install django
+
+Code for virtualenv creation - virtualenv venv
+to activate - source venv/bin/activate
+then use deactivate to deactivate
+to install use pip install django
+
+django project - may contain multiple project application means a group of application
+An application is a part of django project 
+eg- SMS-school management system has many applicationin it just eg. fees app,result app etc
