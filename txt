@@ -58,3 +58,5 @@ This file is used for URL routing. By default, it contains the admin route.
 manage.py
 This is a command-line utility used to run the server, create apps, apply migrations, and perform other administrative tasks.
 `
+
+Run server on a specific port -def. -127.0.1.8000 changed when port is busy - python manage.py runserver 4000 or etc
