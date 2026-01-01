@@ -1,0 +1,48 @@
+Django has two types of views:
+
+Function Based View (FBV)
+
+Class Based View (CBV)
+
+Function Based View (FBV)
+A function based view is a Python function.
+It takes an HTTP request as input and returns an HTTP response.
+The response can be:
+
+a full web page
+
+a text response
+
+an error response
+
+JSON or any HTTP response
+
+All logic is written inside the function.
+
+Example: views.py
+
+from django.shortcuts import render
+from django.http import HttpResponse
+
+Create your views here.
+
+def myfunction(request):
+# logic is written here
+return HttpResponse("Hello Django")
+
+If you are using templates:
+
+def home(request):
+return render(request, "home.html")
+
+urls.py
+
+from django.contrib import admin
+from django.urls import path
+from app1 import views
+
+urlpatterns = [
+path("admin/", admin.site.urls),
+path("", views.home, name="home"),
+path("myfun/", views.myfunction, name="myfunction"),
+]

@@ -1,0 +1,5 @@
+Django follows MVT, not MVE.
+
+Correct term is:
+
+Model – View – Template (MVT)
