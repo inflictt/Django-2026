@@ -1,0 +1,71 @@
+Project is the parent and apps are its children.
+
+steps
+
+create a new folder
+mkdir new_folder
+
+create virtual environment
+virtualenv venv
+
+activate virtual environment
+source venv/bin/activate
+
+create django project
+django-admin startproject project_name
+
+go inside project folder (outer root directory)
+cd project_name
+
+run server to check
+python manage.py runserver
+
+till here, the project is ready.
+
+condition before creating an app
+
+virtual environment must be activated
+
+you must be in the outer root directory (where manage.py exists)
+
+syntax to create an app
+python manage.py startapp app1
+
+about app1 folder
+
+init.py → makes the folder a python package
+
+migrations/
+
+init.py → stores database migration files
+
+admin.py → used to register models so CRUD operations can be performed from Django admin panel
+
+apps.py → app configuration
+
+models.py → used to create database tables
+
+tests.py → used for testing
+
+views.py → contains logic for handling requests and responses
+
+till here, the app is created but it is NOT yet recognised by the django project.
+
+to make django recognise the app, we must register it inside the project settings.
+
+steps to register app
+
+open
+project_name/settings.py
+
+go to INSTALLED_APPS list and add the app name:
+
+app1
+
+(or recommended way)
+
+app1.apps.App1Config
+
+after this, django knows about the app and it can be used for models, views, admin, migrations, etc.
+
+now the app is properly installed and connected to the django project.
