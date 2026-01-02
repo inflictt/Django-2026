@@ -1,0 +1,142 @@
+Django me template ka use isliye hota hai taaki
+business logic (Python code) aur HTML (UI / design) alag-alag rahein.
+Isse code clean, readable aur maintainable hota hai.
+
+Overall flow:
+
+User request bhejta hai (URL hit karta hai)
+
+URL request ko view tak le jaata hai
+
+View business logic handle karta hai (data process, DB se data lana, etc.)
+
+View template ko render karta hai
+
+Rendered HTML response user ko wapas bhej diya jaata hai
+
+Template me kya hota hai?
+
+Template me sirf presentation logic hota hai, heavy business logic nahi.
+
+1. Variables
+
+View se data aata hai aur template me show hota hai:
+
+{{ name }}
+{{ user.email }}
+
+2. Tags (control logic)
+
+Ye decision making aur looping ke liye hote hain.
+
+if-else
+
+{% if user.is_authenticated %}
+  Hello {{ user.username }}
+{% else %}
+  Please login
+{% endif %}
+
+
+for loop
+
+{% for item in items %}
+  {{ item }}
+{% endfor %}
+
+3. Filters (data ko modify karna)
+{{ name|upper }}
+{{ text|length }}
+{{ description|truncatewords:10 }}
+
+4. Template inheritance
+
+Common layout reuse karne ke liye:
+
+{% extends "base.html" %}
+{% block content %}
+  Page content here
+{% endblock %}
+
+Short summary (exam / interview line):
+
+User request bhejta hai → URL view ko call karta hai →
+View business logic handle karta hai →
+Template render hota hai →
+HTML response user ko send ho jaata hai.
+
+
+chalo ek simple real example dekhte hain – URL → View → Template flow 👇
+
+1) URL (urls.py)
+
+User jab URL hit karega tab view call hoga
+
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path("home/", views.home, name="home"),
+]
+
+2) View (views.py)
+
+Yahin business logic hota hai
+Data bana ke template ko bhejte hain
+
+from django.shortcuts import render
+
+def home(request):
+    name = "Saksham"
+    skills = ["Python", "Django", "DSA"]
+
+    return render(request, "home.html", {
+        "name": name,
+        "skills": skills
+    })
+
+3) Template (home.html)
+
+Yahan sirf HTML + template logic
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+</head>
+<body>
+
+<h1>Hello {{ name }}</h1>
+
+<h3>My Skills</h3>
+
+<ul>
+    {% for skill in skills %}
+        <li>{{ skill }}</li>
+    {% endfor %}
+</ul>
+
+{% if skills|length > 2 %}
+    <p>You are learning well 🚀</p>
+{% else %}
+    <p>Keep practicing 👍</p>
+{% endif %}
+
+</body>
+</html>
+
+4) Flow samjho (important)
+
+User browser me likhta hai
+/home/
+
+➡ URL match hota hai
+➡ home view call hota hai
+➡ View data process karta hai
+➡ home.html render hota hai
+➡ Final HTML user ko response me milta hai
+
+One-line yaad rakhne wali baat:
+
+View me logic, template me display.
+Isliye business logic HTML se separate rehta hai.
