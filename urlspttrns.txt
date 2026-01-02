@@ -1,0 +1,36 @@
+
+
+This is the main `urls.py` file of the **ch8 project**.
+
+`urlpatterns` is a list that connects URLs (routes) to views.
+
+Basic syntax of a path:
+
+`path('route/', which_view_to_call, kwargs, name)`
+
+Example:
+
+* `'route/'` → the URL the user types
+* `view` → which function or class-based view should run
+* `kwargs` → optional extra arguments (rarely used)
+* `name` → used for URL reversing
+
+Currently, we are writing **URLs of multiple apps (app1, app2, app3, etc.) inside the main project’s `urls.py` file**.
+This approach is okay for **very small projects**, but it is **not a good practice for bigger or scalable projects**.
+
+To overcome this problem, we create a **separate `urls.py` file inside each app**.
+
+Example:
+
+* `app1/urls.py` → contains only app1 URLs
+* `app2/urls.py` → contains only app2 URLs
+
+Then we **include** these app URLs inside the project’s main `urls.py`.
+
+This approach is better because:
+
+* Code becomes clean and organized
+* Each app is independent
+* If we want to reuse an app, we can simply **copy-paste the entire app folder** into another project without touching the main URLs much
+
+This is the **recommended and standard Django practice**.
