@@ -1,0 +1,62 @@
+Using context for dynamic requirements (Django Templates)
+
+In Django, we use context to send dynamic data from the view to the template.
+
+The context is basically a dictionary.
+
+Syntax to create context (dictionary) in views.py
+context = {
+    "name": "inflict",
+    "age": 20,
+    "course": "BTech CSE"
+}
+
+
+Here:
+
+Keys are strings ("name", "age", "course")
+
+Values can be anything (string, number, list, etc.)
+
+Sending context to template
+return render(request, "home.html", context)
+
+Using context data in template (HTML)
+
+To access dictionary values in a Django template, we use double curly braces {{ }}.
+
+<h1>Hello {{ name }}</h1>
+<p>Age: {{ age }}</p>
+<p>Course: {{ course }}</p>
+
+
+Important points:
+
+{{ }} is used to display data
+
+You do not write dictionary name, only the key
+
+Django automatically understands it from the context
+
+Why we use {{ }} two times?
+
+Single { } → normal text
+
+Double {{ }} → tells Django “this is dynamic data”
+
+So:
+
+{{ name }}
+
+
+means → fetch value of "name" from context and show it here.
+
+Summary (simple words)
+
+Context = dictionary used to send data from view to template
+
+Created in views.py
+
+Passed using render()
+
+Accessed in template using {{ key }}
