@@ -1,0 +1,207 @@
+You’re almost there 👍
+I’ll **fix the code**, **clean the explanation**, and **explain it properly step-by-step** in simple terms.
+
+---
+
+## 1. TEMPLATES setting (settings.py)
+
+You **do NOT add another BACKEND**.
+You still use **one backend** (`DjangoTemplates`).
+To add your own templates folder, you update the **`DIRS`** part.
+
+### ✅ Correct & proper version
+
+```python
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [BASE_DIR / "templates"],  # custom templates folder
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+            ],
+        },
+    },
+]
+```
+
+### What this means
+
+* `BACKEND` → tells Django which template engine to use (keep it same)
+* `DIRS` → global templates folder (outside apps)
+* `APP_DIRS = True` → allows templates inside apps (`app/templates/`)
+
+---
+
+## 2. Folder structure (IMPORTANT)
+
+Since you are rendering
+`course/django.html`
+
+Your folder must be like this 👇
+
+```
+course/
+ ├── templates/
+ │    └── course/
+ │         └── django.html
+ ├── views.py
+```
+
+OR if using global templates folder:
+
+```
+templates/
+ └── course/
+      └── django.html
+```
+
+---
+
+## 3. View function (fixed & clean)
+
+### ✅ Correct view
+
+```python
+from django.shortcuts import render
+
+def dj(request):
+    return render(request, "course/django.html", {
+        "cname": "inflict"
+    })
+```
+
+* `context` is a **dictionary**
+* Django converts dictionary keys into **template variables**
+
+---
+
+## 4. Using context in HTML (VERY IMPORTANT)
+
+### `django.html`
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Django Course</title>
+</head>
+<body>
+    <h1>Course Name: {{ cname }}</h1>
+</body>
+</html>
+```
+
+### Key point
+
+* Python → dictionary → `{ "cname": "inflict" }`
+* HTML → variable → `{{ cname }}`
+
+That’s why it **acts like a variable** inside `.html`.
+
+---
+
+## 5. Flow in simple words (remember this for exams)
+
+1. User sends request
+2. View function runs
+3. View sends:
+
+   * template name
+   * context dictionary
+4. Django renders HTML
+5. Dictionary keys become variables inside template
+6. Final HTML is sent as response
+
+---
+filter are many means so many imp are -    <h1>Hello User - {{cname}}, World! To Django</h1>
+    User - {{cname|upper}} {% comment %} this make the case as upper suing the pipe symbol | {% endcomment %}
+    2. What | (pipe) actually does
+
+In Django templates:
+
+variable | filter
+
+
+Example:
+
+{{ cname|upper }}
+
+
+cname → variable coming from context
+
+upper → Django built-in filter
+
+Output → text in UPPERCASE
+
+3. Filter with arguments (colon :)
+
+Example:
+
+{{ description|truncatewords:3 }}
+
+
+truncatewords → filter name
+
+3 → argument
+
+: → used to pass argument to filter
+
+So Django reads it as:
+
+“Show only first 3 words of description”
+
+4. Context required in views.py (IMPORTANT)
+
+Your view must pass both variables:
+
+def dj(request):
+    return render(request, "course/django.html", {
+        "cname": "inflict",
+        "description": "Django is a high level Python web framework"
+    })
+
+
+If you don’t pass description, Django will render empty output.
+
+5. Django template comments (correct usage)
+{% comment %}
+This is a Django template comment.
+It will NOT appear in HTML source.
+{% endcomment %}
+
+
+Difference:
+
+<!-- HTML comment --> → visible in page source
+
+{% comment %} → removed completely by Django
+
+6. Output example (what user sees)
+
+If:
+
+cname = "inflict"
+description = "Django is a high level Python web framework"
+
+
+Then page shows:
+
+Hello User - inflict, Welcome to Django!
+User (uppercase) → INFLICT
+Description → Django is a
+
+7. Quick revision (exam friendly)
+
+{{ }} → variable output
+
+{% %} → logic / tags
+
+| → filter
+
+: → filter argument
+
+context → dictionary in views → variables in template

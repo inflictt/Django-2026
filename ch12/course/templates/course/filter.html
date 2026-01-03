@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Filters</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Hello User - {{ cname }}, Welcome to Django!</h1>
+
+    User (uppercase) → {{ cname|upper }} {% comment %} The pipe symbol | is used
+    to apply filters. upper converts the text to uppercase. {% endcomment %}
+
+    <br /><br />
+
+    Description → {{ description|truncatewords:3 }} {% comment %}
+    truncatewords:3 keeps only the first 3 words and removes the remaining
+    words. {% endcomment %}
+  </body>
+</html>

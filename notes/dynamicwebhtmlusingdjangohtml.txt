@@ -7,7 +7,7 @@ The context is basically a dictionary.
 Syntax to create context (dictionary) in views.py
 context = {
     "name": "inflict",
-    "age": 20,
+    "age": 18,
     "course": "BTech CSE"
 }
 
