@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="{% static 'course/css/style.css' %}" />
+
+    <title>Course</title>
+  </head>
+
+  <body>
+    <h1>Welcome user to our site - {{ name }}</h1>
+
+    <p>Your course of Django with content here</p>
+
+    <b>Course with static files</b>
+
+    <p>Notes to use static files in Django:</p>
+    <h4>Ye aayi itenni badi photo</h4>
+    <img src="{% static "course/images/11.jpg" %}" alt="Tbsm" /s>
+    <ol>
+      <li>Create a folder named <b>static</b> inside the app</li>
+      <li>
+        Inside static, create a folder with the same name as the app
+        (<b>course</b>)
+      </li>
+      <li>Put CSS, JS, images inside that folder</li>
+    </ol>
+    <form action="">
+      <input type="button" value="Click Me" onclick="disp()" />
+    </form>
+    <script src="{% static 'course/scripts/scripts.js' %}">
+      Click me to get an alert loudly
+    </script>
+  </body>
+</html>
