@@ -1,0 +1,175 @@
+## Django Template Inheritance (WHY it comes first)
+
+Template inheritance is **the very first concept** you should learn in Django templates because:
+
+* It **prevents repetition** of HTML
+* It enforces **DRY (Don’t Repeat Yourself)**
+* It separates **layout** from **page-specific content**
+* It makes large projects **manageable and scalable**
+
+In real projects, **every page shares common parts**:
+
+* `<head>`
+* Navbar
+* Footer
+* Scripts
+* Styles
+
+Instead of writing these again and again, Django provides **template inheritance**.
+
+---
+
+## Base Template (Parent Template)
+
+The **base template** acts like a **skeleton / structure** of your website.
+
+It contains:
+
+* Common HTML layout
+* Reusable sections
+* Placeholder areas for child templates
+
+These placeholder areas are created using **block tags**.
+
+Think of it as:
+
+> “This is the fixed structure, child templates will fill the gaps.”
+
+---
+
+## `{% block %}` and `{% endblock %}` (Core Concept)
+
+A **block** is a **replaceable section** in the parent template.
+
+### What `{% block %}` does:
+
+* Marks a section where child templates can inject content
+* Acts like a **slot**
+
+### What `{% endblock %}` does:
+
+* Ends that replaceable section
+
+So together:
+
+```
+block  → start of replaceable area
+endblock → end of replaceable area
+```
+
+Without `endblock`, Django doesn’t know where the block ends.
+
+---
+
+## Rule: Blocks ALWAYS come in pairs
+
+* Every `{% block %}` **must** have `{% endblock %}`
+* Otherwise → **TemplateSyntaxError**
+
+This is a **strict rule** of Django template language.
+
+---
+
+## Child Template (Inheritance Happens Here)
+
+Child templates **inherit** from the parent template.
+
+They do **not rewrite full HTML**.
+
+Instead:
+
+* They override only the blocks they need
+* Everything else is reused automatically
+
+Inheritance follows this hierarchy:
+
+```
+Parent (base.html)
+   ↓
+Child (home.html, about.html, course.html)
+```
+
+---
+
+## Important Rules of Template Inheritance
+
+### 1. `{% extends %}` must be the FIRST line
+
+No HTML, no spaces, no text before it.
+
+Why?
+Because Django must know:
+
+> “Which template am I inheriting from?”
+
+If it’s not first → Django throws an error.
+
+---
+
+### 2. Blocks are defined in parent, overridden in child
+
+* Parent → defines blocks
+* Child → fills blocks
+
+Child templates **do not create new structure**, they only **customize content**.
+
+---
+
+### 3. Same block name connects parent and child
+
+Inheritance works using **block names**.
+
+If parent has:
+
+```
+block content
+```
+
+Child must override:
+
+```
+block content
+```
+
+Different names = no connection.
+
+---
+
+## Why Django Enforces This Design
+
+This strict structure gives:
+
+* Clean architecture
+* Predictable rendering
+* Easy debugging
+* Team-friendly templates
+
+It avoids:
+
+* Messy HTML duplication
+* Inconsistent layouts
+* Copy-paste bugs
+
+---
+
+## Mental Model (Easy to Remember)
+
+* **Base template** = Blueprint
+* **Blocks** = Empty rooms
+* **Child template** = Furniture placed inside rooms
+
+Rooms already exist — you only decorate them.
+
+---
+
+## Summary (Exam-Ready)
+
+* Template inheritance is the **foundation** of Django templates
+* `{% block %}` defines replaceable sections
+* `{% endblock %}` closes the section
+* Blocks must always be paired
+* `{% extends %}` must be the very first line
+* Parent defines structure, child defines content
+* This keeps code reusable, clean, and scalable
+
+
