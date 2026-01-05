@@ -205,3 +205,186 @@ Description → Django is a
 : → filter argument
 
 context → dictionary in views → variables in template
+
+📘 Django Template & Hyperlink Handling – Complete Notes
+1. Why Templates Are Used in Django
+
+Django follows MVT architecture
+
+Model → Database logic
+
+View → Business logic
+
+Template → Presentation (HTML)
+
+Templates help:
+
+Separate HTML from Python logic
+
+Reuse common layout
+
+Maintain clean project structure
+
+2. Base Template Concept (base.html)
+
+base.html contains:
+
+Common header
+
+Navbar
+
+Footer
+
+Static files (CSS, images)
+
+Other pages extend this base template
+
+Purpose:
+
+Avoid code duplication
+
+Easy layout changes
+
+3. Loading Static Files in Templates
+Step 1: Load static tag
+{% load static %}
+
+Step 2: Use static files
+<link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+<img src="{% static 'core/images/11.jpg' %}" alt="me">
+
+
+✔ Static files must be inside:
+
+app_name/static/app_name/
+
+4. Template Blocks (Dynamic Content)
+Define blocks in base.html
+{% block title %}
+Default Title
+{% endblock title %}
+
+{% block hero %}
+{% endblock hero %}
+
+{% block content %}
+{% endblock content %}
+
+Purpose of blocks
+
+Allow child templates to inject content
+
+Keep layout fixed, content flexible
+
+5. Extending Base Template
+
+In child templates:
+
+{% extends 'core/base.html' %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+<h2>Welcome Home</h2>
+{% endblock content %}
+
+6. Navbar & Hyperlinks (IMPORTANT)
+❌ Wrong Way (Relative URLs)
+<a href="course/home">Home</a>
+
+
+Problem:
+
+Breaks when URL depth changes
+
+Causes paths like:
+
+/course/dj/course/home
+
+7. Correct Way – Django {% url %} Tag ✅
+Step 1: Name URLs in urls.py
+path("home/", views.home, name="home"),
+path("course/dj/", views.dj, name="dj"),
+path("course/py/", views.py, name="py"),
+path("about/", views.about, name="about"),
+
+Step 2: Use names in templates
+<a href="{% url 'home' %}">home</a>
+<a href="{% url 'dj' %}">Django</a>
+<a href="{% url 'about' %}">about</a>
+<a href="{% url 'py' %}">python</a>
+
+
+✔ URL-safe
+✔ Refactor-safe
+✔ Best practice
+
+8. Final Working base.html Structure
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+  <title>{% block title %}Default Title{% endblock title %}</title>
+</head>
+
+<body>
+  <header>
+    <h1>Common Header Section</h1>
+    <nav>
+      <ul>
+        <li><a href="{% url 'home' %}">home</a></li>
+        <li><a href="{% url 'dj' %}">Django</a></li>
+        <li><a href="{% url 'about' %}">about</a></li>
+        <li><a href="{% url 'py' %}">python</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <img src="{% static 'core/images/11.jpg' %}" alt="me">
+
+  <section>{% block hero %}{% endblock hero %}</section>
+  <main>{% block content %}{% endblock content %}</main>
+
+  <footer><p>Common Footer Section</p></footer>
+</body>
+</html>
+
+9. Git & GitHub Learning (Important Notes)
+Git only tracks:
+
+Saved files
+
+Inside repo directory
+
+Not ignored by .gitignore
+
+Ignored files (GOOD practice):
+
+venv/
+
+.venv/
+
+__pycache__/
+
+db.sqlite3
+
+Commit workflow:
+git status
+git add .
+git commit -m "message"
+git push origin main
+
+No change → no commit → no push
+10. Common Mistakes & Fixes
+Mistake	Fix
+Relative URLs	Use {% url %}
+404 error	Check named URLs
+Static not loading	{% load static %}
+Git not pushing	Save file first
+Trying to push venv	Never push venv
+🔑 One-Line Summary (Exam Ready)
+
+Django templates use {% extends %}, {% block %}, {% static %}, and {% url %} to create reusable layouts, safely manage static files, and generate dynamic, maintainable hyperlinks.
