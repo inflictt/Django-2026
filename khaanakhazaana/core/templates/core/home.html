@@ -1,0 +1,21 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Home | Khana Khazaana{% endblock %}
+
+{% block hero %}
+<section class="hero">
+  <div class="hero-text">
+    <h1>
+      Enjoy Delicious <br>
+      <span>Traditional Food</span>
+    </h1>
+    <p>Good food warms the heart and mends the soul.</p>
+    <button class="cta-btn">Order Now →</button>
+  </div>
+
+  <div class="hero-image">
+    <img src="{% static 'core/images/food.png' %}" alt="Food">
+  </div>
+</section>
+{% endblock hero %}
