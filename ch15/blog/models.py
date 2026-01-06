@@ -17,6 +17,8 @@ class Student(models.Model):
     # enrollment_date column
     # auto_now_add=True → value set automatically when record is created
     enrollment_date = models.DateField(auto_now_add=True)
+    city = models.CharField(max_length=100, default="Delhi")
+
 
     # Optional: readable object representation
     def __str__(self):

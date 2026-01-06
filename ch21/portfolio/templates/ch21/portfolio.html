@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Portfolio</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<header>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="{% url 'port' %}">Portfolio</a></li>
+            <li><a href="{% url 'stu_list' %}">Student List</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <h1>Portfolio</h1>
+</main>
+
+</body>
+</html>
