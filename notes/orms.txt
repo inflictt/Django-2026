@@ -1,0 +1,321 @@
+---
+
+# 📘 ORM (Object Relational Mapper) — COMPLETE NOTES
+
+## 🔹 What is ORM? (Simple Language)
+
+**ORM = Object Relational Mapper**
+
+➡️ ORM lets you **write database queries using Python code instead of SQL**
+➡️ You deal with **classes & objects**, not tables & rows
+➡️ Django automatically **converts Python code → SQL**
+
+👉 Means:
+
+> “Database se baat karne ke liye SQL likhne ki zarurat nahi, Python likho.”
+
+---
+
+## 🔹 Without ORM vs With ORM
+
+### ❌ Without ORM (Raw SQL)
+
+```sql
+SELECT * FROM student WHERE age > 18;
+```
+
+### ✅ With ORM (Python)
+
+```python
+Student.objects.filter(age__gt=18)
+```
+
+➡️ **Readable**
+➡️ **Safer**
+➡️ **Database independent**
+
+---
+
+## 🔹 Core ORM Mapping Concept
+
+| Python (ORM) | Database      |
+| ------------ | ------------- |
+| Class        | Table         |
+| Object       | Row           |
+| Attribute    | Column        |
+| .objects     | Query Manager |
+
+---
+
+## 🔹 Model = Table (CLASS REPRESENTATION)
+
+```python
+from django.db import models
+
+class Student(models.Model):
+    name = models.CharField(max_length=100)
+    age = models.IntegerField()
+    email = models.EmailField(unique=True)
+```
+
+### What Django does internally:
+
+```sql
+CREATE TABLE student (
+  id INTEGER PRIMARY KEY,
+  name VARCHAR(100),
+  age INTEGER,
+  email VARCHAR(255)
+);
+```
+
+➡️ **Class = Table**
+➡️ **Variables = Columns**
+
+---
+
+## 🔹 Creating Data (INSERT)
+
+### SQL
+
+```sql
+INSERT INTO student (name, age) VALUES ('Amit', 20);
+```
+
+### ORM
+
+```python
+Student.objects.create(name="Amit", age=20)
+```
+
+OR
+
+```python
+s = Student(name="Amit", age=20)
+s.save()
+```
+
+---
+
+## 🔹 Reading Data (SELECT)
+
+### Get ALL rows
+
+```python
+Student.objects.all()
+```
+
+### Get ONE row (must be unique)
+
+```python
+Student.objects.get(id=1)
+```
+
+⚠️ Error if:
+
+* No record found
+* More than one record found
+
+---
+
+## 🔹 Filtering Data (WHERE clause)
+
+### SQL
+
+```sql
+SELECT * FROM student WHERE age = 20;
+```
+
+### ORM
+
+```python
+Student.objects.filter(age=20)
+```
+
+---
+
+## 🔹 Field Lookups (Readable Queries)
+
+| Condition     | ORM                    |
+| ------------- | ---------------------- |
+| Equal         | `age=20`               |
+| Greater than  | `age__gt=18`           |
+| Less than     | `age__lt=30`           |
+| Greater equal | `age__gte=18`          |
+| Contains      | `name__icontains="am"` |
+| Starts with   | `name__startswith="A"` |
+
+Example:
+
+```python
+Student.objects.filter(age__gt=18)
+```
+
+---
+
+## 🔹 Multiple Conditions
+
+```python
+Student.objects.filter(age__gt=18, name__icontains="a")
+```
+
+➡️ Automatically uses **AND**
+
+---
+
+## 🔹 OR Condition (Q Objects)
+
+```python
+from django.db.models import Q
+
+Student.objects.filter(
+    Q(age__gt=18) | Q(name__startswith="A")
+)
+```
+
+---
+
+## 🔹 Excluding Data (NOT)
+
+```python
+Student.objects.exclude(age=18)
+```
+
+---
+
+## 🔹 Ordering Data
+
+```python
+Student.objects.order_by("age")      # Ascending
+Student.objects.order_by("-age")     # Descending
+```
+
+---
+
+## 🔹 Limiting Data (Slice)
+
+```python
+Student.objects.all()[:5]
+```
+
+➡️ SQL LIMIT 5
+
+---
+
+## 🔹 Count Records
+
+```python
+Student.objects.count()
+```
+
+---
+
+## 🔹 Check Exists
+
+```python
+Student.objects.filter(email="a@gmail.com").exists()
+```
+
+---
+
+## 🔹 Update Data
+
+```python
+Student.objects.filter(id=1).update(age=25)
+```
+
+OR
+
+```python
+s = Student.objects.get(id=1)
+s.age = 25
+s.save()
+```
+
+---
+
+## 🔹 Delete Data
+
+```python
+Student.objects.filter(id=1).delete()
+```
+
+---
+
+## 🔹 Relationships (VERY IMPORTANT)
+
+### One-to-Many (ForeignKey)
+
+```python
+class Course(models.Model):
+    name = models.CharField(max_length=100)
+
+class Student(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+```
+
+➡️ Many students → One course
+
+Query:
+
+```python
+Student.objects.filter(course__name="Python")
+```
+
+---
+
+### Many-to-Many
+
+```python
+class Student(models.Model):
+    subjects = models.ManyToManyField(Subject)
+```
+
+---
+
+## 🔹 Aggregation (SUM, AVG, COUNT)
+
+```python
+from django.db.models import Avg
+
+Student.objects.aggregate(Avg('age'))
+```
+
+---
+
+## 🔹 ORM Optimization (ADVANCED)
+
+### Problem (N+1 Queries)
+
+```python
+students = Student.objects.all()
+for s in students:
+    print(s.course.name)
+```
+
+### Solution
+
+```python
+Student.objects.select_related("course")
+```
+
+➡️ Faster performance
+
+---
+
+## 🔹 Why ORM is IMPORTANT (Interview Answer)
+
+✔ Readable
+✔ Secure (SQL injection safe)
+✔ Faster development
+✔ Database independent
+✔ Clean code
+
+---
+
+## 🔹 One-Line Summary (EXAM READY)
+
+> **ORM allows developers to interact with databases using Python classes and objects instead of writing raw SQL queries, improving readability, security, and productivity.**
+
+---
+
