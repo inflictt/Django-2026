@@ -1,0 +1,15 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Data</title>
+</head>
+<body>
+    <h1>Student Data</h1>
+    <ul>
+        {% for student in students %}
+            <li>{{ student.name }} - {{ student.age }} - {{ student.email }}</li>edit student <a href="{% url 'student_edit' student.id %}">Edit</a> 
+        {% endfor %}
+    </ul>   
+</body>
+</html>

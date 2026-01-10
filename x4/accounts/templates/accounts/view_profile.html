@@ -1,0 +1,12 @@
+{% extends "accounts/base.html" %}
+{% block content %}
+    <h2>View  Profile Picture</h2>
+    {% for profile in profiles %}
+        <h3>{{ profile.name }}</h3>
+        <img src="{{ profile.image.url }}" alt="{{ profile.name }}" width="200">
+    {% empty %}
+        <p>No profiles available.</p>
+    {% endfor %}
+
+
+{% endblock %}

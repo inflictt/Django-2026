@@ -1,0 +1,10 @@
+{% extends "accounts/base.html" %} 
+{% block content %}
+    <h2>Dashboard</h2>
+    <p>Welcome to your dashboard, {{ user.username }}!</p>
+    <ul>
+        <li><a href="{% url 'change_password' %}">Change Password</     
+Password</a></li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+    </ul>
+{% endblock %}  
